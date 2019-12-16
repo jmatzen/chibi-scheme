@@ -21,11 +21,9 @@ set(version "${rawversion}-cmake")
 set(chibischemelib "chibi-scheme-${rawversion}")
 
 if(APPLE)
-    message(FATAL_ERROR 
+    message(WARNING 
         "DYLD platforms are not supported with this CMakeLists.txt. Use Makefile instead.")
-endif()
-
-if(UNIX)
+elseif(UNIX)
     message(FATAL_ERROR 
         "UNIX platforms are not supported with this CMakeLists.txt. Use Makefile instead.")
 endif()
@@ -60,7 +58,7 @@ if(NOT HAVE_POLL_H)
 endif()
 
 set(chibi-scheme-exclude-modules)
-if(WIN32)
+if(WIN32 OR APPLE)
     add_definitions(-DBUILDING_DLL)
     set(chibi-scheme-exclude-modules
         # Following modules are not compatible with Win32
